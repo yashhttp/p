@@ -11,15 +11,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(morganMiddleware);
 
 // Routes
 app.use("/api/v1", routes);
 
-// Health route
+// test route
 app.get("/", (req, res) => {
-  res.send("🚀 Smart Campus ERP Running...");
+  res.send("AUTO FILL is  Running...");
 });
 
 // Error Middleware (LAST)

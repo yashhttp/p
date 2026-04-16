@@ -47,3 +47,14 @@ export const loginUser = async (data)=>{
 export const getMe = async (userId) => {
   return User.findById(userId).select("-password");
 };
+
+export const logoutUser = async (userId) => {
+  const user = await User.findById(userId);
+
+  if (!user) throw new Error("User not found");
+
+  user.refreshToken = null; 
+  await user.save();
+
+  return true;
+};

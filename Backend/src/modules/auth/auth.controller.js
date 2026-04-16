@@ -18,24 +18,22 @@ export const login =asyncHandler(async (req,res)=>{
         data
     })
 });
-// export const me =asyncHandler(async (req,res)=>{
-//     const user = await authService.getMe(req.user._id);
-//     res.status(201).json({
-//         success:true,
-//         message:"Profile get Successfully",
-//         data:user,
-//     })
-// });
-
-export const me = async (req, res, next) => {
-  try {
+export const me =asyncHandler(async (req,res)=>{
     const user = await authService.getMe(req.user.id);
+    res.status(201).json({
+        success:true,
+        message:"Profile get Successfully",
+        data:user,
+    })
+});
+export const logout =asyncHandler(async (req,res)=>{
+    const user = await authService.getMe(req.user.id);
+    
+    res.status(201).json({
+        success:true,
+        message:"Logout  Successfully",
+        
+    })
+});
 
-    res.json({
-      success: true,
-      data: user,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+

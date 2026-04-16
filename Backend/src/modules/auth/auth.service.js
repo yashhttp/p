@@ -6,6 +6,7 @@ import { generateResetToken } from "../../utils/token.js";
 import ApiError from '../../utils/ApiError.js';
 import ApiResponse from '../../utils/ApiResponse.js';
 
+
 export const registerUser = async (data)=>{
     const {name, email, password} = data;
 

@@ -1,6 +1,7 @@
 import asyncHandler from '../../utils/asyncHandler.js';
 import * as authService from './auth.service.js';
 
+
 export const register =asyncHandler(async (req,res)=>{
     const user = await authService.registerUser(req.body);
     res.status(201).json({
@@ -18,6 +19,7 @@ export const login =asyncHandler(async (req,res)=>{
         data
     })
 });
+
 export const me =asyncHandler(async (req,res)=>{
     const user = await authService.getMe(req.user.id);
     res.status(201).json({
@@ -26,6 +28,7 @@ export const me =asyncHandler(async (req,res)=>{
         data:user,
     })
 });
+
 export const logout =asyncHandler(async (req,res)=>{
     const user = await authService.getMe(req.user.id);
     

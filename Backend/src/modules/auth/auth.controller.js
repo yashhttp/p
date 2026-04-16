@@ -36,4 +36,30 @@ export const logout =asyncHandler(async (req,res)=>{
     })
 });
 
+export const forgotPassword = async (req, res) => {
+  
+    const user = await authService.forgotPassword(req.body.email);
 
+    res.json({
+      success: true,
+      message: "Reset token sent to email",
+      data:user
+    });
+  
+};
+
+export const resetPassword = async (req, res, next) => {
+  try {
+    await authService.resetPassword(
+      req.params.token,
+      req.body.password
+    );
+
+    res.json({
+      success: true,
+      message: "Password reset successful",
+    });
+  } catch (err) {
+    next(err);
+  }
+};

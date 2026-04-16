@@ -19,9 +19,11 @@ const authSchema = new mongoose.Schema(
     },
     refreshToken: String,
 
-    lastLogin: Date, 
+    lastLogin: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
   },
-  { timestamps:true }
+  { timestamps: true },
 );
 
 export default mongoose.model("User", authSchema);

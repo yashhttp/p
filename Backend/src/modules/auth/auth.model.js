@@ -19,9 +19,9 @@ const authSchema = new mongoose.Schema(
     },
     refreshToken: String,
 
-    lastLogin: Date, // 🔥 pro feature
+    lastLogin: Date, 
   },
-  { timestamps: true }
+  { timestamps:true }
 );
 
 export default mongoose.model("User", authSchema);

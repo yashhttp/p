@@ -43,3 +43,7 @@ export const loginUser = async (data)=>{
 
 
 }
+
+export const getMe = async (userId) => {
+  return User.findById(userId).select("-password");
+};

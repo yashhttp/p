@@ -9,3 +9,10 @@ export const getProfile = asyncHandler(async (req, res) => {
     new ApiResponse(200,"Profile fetched successfully", profile)
   );
 });
+export const updateProfile = asyncHandler(async (req, res) => {
+  const profile = await userService.updateUserProfile(req.user.id, req.body);
+
+  return res.json(
+    new ApiResponse(200,"Profile update successfully", profile)
+  );
+});

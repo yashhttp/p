@@ -10,3 +10,15 @@ export const getUserProfile = async (userId) => {
 
   return user.profile || {};
 };
+
+export const updateUserProfile = async(userId, data)=>{
+    const user = await User.findById(userId);
+    if(!user) throw new ApiError(404, "User not Found")
+    
+    user.profile = {
+        ...user.profile?.doc,
+        ...data,
+    }
+    await user.save();
+    return user.profile;
+}

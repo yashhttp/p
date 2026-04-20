@@ -7,11 +7,11 @@ const profileSchema = new mongoose.Schema({
   dob: Date,
   gender: String,
   address: {
-    lin1: String,
+    line1: String,
     line2: String,
     city: String,
     state: String,
-    pincoode: String,
+    pincode: String,
   },
   govtIds: {
     aadhar: String,
@@ -30,7 +30,8 @@ const userSchema = new mongoose.Schema(
     },
     profile: {
        type: profileSchema,
-       default:{}
+       default:{},
+        _id: false 
     } //main system
   },
   { timestamps: true },

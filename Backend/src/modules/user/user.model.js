@@ -28,9 +28,12 @@ const userSchema = new mongoose.Schema(
       enum: ["ADMIN", "USER"],
       default: "USER",
     },
-    profile: profileSchema, //main system
+    profile: {
+       type: profileSchema,
+       default:{}
+    } //main system
   },
   { timestamps: true },
 );
 
-export default mongoose.model("User", userSchema)
+export default mongoose.model("Users", userSchema)

@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import authRoutes from "../modules/auth/auth.routes.js"
+import userRoutes from '../modules/user/user.routes.js'
 const router = express.Router();
 
 router.get(
@@ -14,5 +15,5 @@ router.get(
 );
 
 router.use("/auth", authRoutes);
-
+router.use("/users", userRoutes);
 export default router;

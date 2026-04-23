@@ -19,3 +19,9 @@ export const getForm = async (req, res) => {
 
   res.json(new ApiResponse(200, form));
 };
+
+export const updateForm = asyncHandler(async (req,res)=>{
+    const form = await formService.updateForm(req.params.id, req.body);
+
+    res.json(new ApiResponse(200, form, "Form updated"));
+})

@@ -1,8 +1,21 @@
 import * as formService from "./form.service.js";
 import  ApiResponse  from "../../utils/ApiResponse.js";
+import asyncHandler from "../../utils/asyncHandler.js";
 
-export const createForm = async (req, res) => {
+export const createForm = asyncHandler(async (req, res) => {
   const form = await formService.createForm(req.body, req.user.id);
 
   res.json(new ApiResponse(201, form, "Form created"));
+});
+
+export const getForms = asyncHandler(async (req, res) => {
+  const forms = await formService.getAllForms();
+
+  res.json(new ApiResponse(200, forms));
+});
+
+export const getForm = async (req, res) => {
+  const form = await formService.getFormById(req.params.id);
+
+  res.json(new ApiResponse(200, form));
 };

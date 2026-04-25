@@ -1,28 +1,28 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const fieldSchema = new mongoose.Schema({
-    label :{ type:String, required: true},
-    name :{ type:String, required: true},
-    type:{
-        type:String,
-        enum:['text','number','date','select', 'radio', 'checkbox', 'file'],
-        required: true
-    },
-    required:{ type:Boolean, default: false},
-    order: { type: Number, required: true },
-    options: [{type:String}],
-    placeholder : String,
-    defaultValue : mongoose.Schema.Types.Mixed,
-    validation : {
-        min:Number,
-        max:Number,
-        regex:String
-    },
-    aiHint:{
-        keywords:[String], //["full name" : "applicant name"]
-        mappingKey : String //"fuleName"
-    }
-})
+  label: { type: String, required: true },
+  name: { type: String, required: true },
+  type: {
+    type: String,
+    enum: ["text", "number", "date", "select", "radio", "checkbox", "file"],
+    required: true,
+  },
+  required: { type: Boolean, default: false },
+  order: { type: Number, required: true },
+  options: [{ type: String }],
+  placeholder: String,
+  defaultValue: mongoose.Schema.Types.Mixed,
+  validation: {
+    min: Number,
+    max: Number,
+    regex: String,
+  },
+  aiHint: {
+    keywords: [String], //["full name" : "applicant name"]
+    mappingKey: String, //"fuleName"
+  },
+});
 
 const formSchema = new mongoose.Schema(
   {
@@ -30,7 +30,16 @@ const formSchema = new mongoose.Schema(
 
     description: String,
 
-    fields: [fieldSchema],
+    fields: {
+      type: [fieldSchema],
+      validate: {
+        validator: function (fields) {
+          const names = fields.map((f) => f.name);
+          return names.length === new Set(names).size;
+        },
+        message: "Field names must be unique",
+      },
+    },
 
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
@@ -43,7 +52,7 @@ const formSchema = new mongoose.Schema(
 
     tags: [String], //  search/filter
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Form = mongoose.model("Form", formSchema);

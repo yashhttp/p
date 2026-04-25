@@ -9,6 +9,7 @@ const fieldSchema = new mongoose.Schema({
         required: true
     },
     required:{ type:Boolean, default: false},
+    order: { type: Number, required: true },
     options: [{type:String}],
     placeholder : String,
     defaultValue : mongoose.Schema.Types.Mixed,

@@ -8,11 +8,11 @@ export const createForm = asyncHandler(async (req, res) => {
   res.json(new ApiResponse(201, form, "Form created"));
 });
 
-export const getForms = asyncHandler(async (req, res) => {
-  const forms = await formService.getAllForms();
+export const getForms = async (req, res) => {
+  const result = await formService.getAllForms(req.query); // ✅ FIX
 
-  res.json(new ApiResponse(200, forms));
-});
+  res.json(new ApiResponse(200, result));
+};
 
 export const getForm = async (req, res) => {
   const form = await formService.getFormById(req.params.id);

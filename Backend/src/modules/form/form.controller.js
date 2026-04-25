@@ -25,3 +25,9 @@ export const updateForm = asyncHandler(async (req,res)=>{
 
     res.json(new ApiResponse(200, form, "Form updated"));
 })
+
+export const deleteForm = async (req, res) => {
+  await formService.deleteForm(req.params.id);
+
+  res.json(new ApiResponse(200,  "Form deleted", {}));
+};

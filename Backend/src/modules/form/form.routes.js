@@ -10,5 +10,5 @@ router.post("/", auth, Roles("ADMIN"), controller.createForm);
 router.get("/", auth, controller.getForms);
 router.get("/:id", auth, controller.getForm);
 router.patch("/:id", auth, Roles("ADMIN"), controller.updateForm);
-
+router.delete("/:id", auth, Roles("ADMIN"), controller.deleteForm);
 export default router;

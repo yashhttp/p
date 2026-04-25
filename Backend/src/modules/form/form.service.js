@@ -30,3 +30,7 @@ export const updateForm = async (id, updateData) => {
 
   return await existing.save();
 };
+
+export const deleteForm = async (id) => {
+  return await Form.findByIdAndUpdate(id, { isActive: false });
+};

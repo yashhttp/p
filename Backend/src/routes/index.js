@@ -4,6 +4,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 import authRoutes from "../modules/auth/auth.routes.js"
 import userRoutes from '../modules/user/user.routes.js'
 import formRoutes from '../modules/form/form.routes.js'
+import mappingRoutes from '../modules/mapping/mapping.routes.js'
 const router = express.Router();
 
 router.get(
@@ -18,4 +19,6 @@ router.get(
 router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/forms", formRoutes);
+router.use("/mapping", mappingRoutes);
+
 export default router;

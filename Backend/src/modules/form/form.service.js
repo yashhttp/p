@@ -1,8 +1,24 @@
 import { Form } from "./form.model.js";
 import { FormVersion } from "./form.version.model.js";
 
+// export const createForm = async (data, userId) => {
+//   return await Form.create({ ...data, createdBy: userId });
+// };
 export const createForm = async (data, userId) => {
-  return await Form.create({ ...data, createdBy: userId });
+  const form = await Form.create({
+    ...data,
+    createdBy: userId,
+    version: 1,
+  });
+
+  // ✅ create initial version
+  await FormVersion.create({
+    formId: form._id,
+    snapshot: form.toObject(),
+    version: 1,
+  });
+
+  return form;
 };
 
 // export const getAllForms = async ()=>{
@@ -39,7 +55,7 @@ export const createForm = async (data, userId) => {
 //     },
 //   };
 // };
-export const getAllForms = async (query = {}) => { // ✅ default empty object
+export const getAllForms = async (query = {}) => { 
 
   const page = parseInt(query.page) || 1;
   const limit = parseInt(query.limit) || 10;
@@ -95,4 +111,7 @@ export const updateForm = async (id, updateData) => {
 
 export const deleteForm = async (id) => {
   return await Form.findByIdAndUpdate(id, { isActive: false });
+};
+export const getFormVersions = async (formId) => {
+  return await FormVersion.find({ formId }).sort({ createdAt: -1 });
 };

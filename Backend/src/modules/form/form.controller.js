@@ -31,3 +31,9 @@ export const deleteForm = async (req, res) => {
 
   res.json(new ApiResponse(200,  "Form deleted", {}));
 };
+
+export const getVersions = async (req, res) => {
+  const versions = await formService.getFormVersions(req.params.id);
+
+  res.json(new ApiResponse(200, versions));
+};

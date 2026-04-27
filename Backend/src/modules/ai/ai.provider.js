@@ -1,18 +1,33 @@
-import axios from "axios";
-import { MODEL } from "./ai.constants.js";
+import { pipeline } from "@xenova/transformers";
 
-const HF_API = `https://api-inference.huggingface.co/models/${MODEL}`;
+let extractor;
 
+const loadModel = async () => {
+  if (!extractor) {
+    extractor = await pipeline(
+      "feature-extraction",
+      "Xenova/all-MiniLM-L6-v2"
+    );
+  }
+};
+
+export const getEmbedding = async (text) => {
+  await loadModel();
+
+  const result = await extractor(text, {
+    pooling: "mean",
+    normalize: true,
+  });
+
+  return result.data; // clean vector
+};
 export const getBatchEmbeddings = async (texts) => {
-  const res = await axios.post(
-    HF_API,
-    { inputs: texts },
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.HF_API_KEY}`,
-      },
-    }
-  );
+  const embeddings = [];
 
-  return res.data;
+  for (const text of texts) {
+    const emb = await getEmbedding(text);
+    embeddings.push(emb);
+  }
+
+  return embeddings;
 };

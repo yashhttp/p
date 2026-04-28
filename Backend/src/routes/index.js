@@ -6,6 +6,7 @@ import userRoutes from '../modules/user/user.routes.js'
 import formRoutes from '../modules/form/form.routes.js'
 import mappingRoutes from '../modules/mapping/mapping.routes.js'
 import aiRoutes from '../modules/ai/ai.routes.js'
+import autofillRoutes from '../modules/autofill/autofill.routes.js'
 const router = express.Router();
 
 router.get(
@@ -21,6 +22,7 @@ router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/forms", formRoutes);
 router.use("/mapping", mappingRoutes);
-router.use("/ai", aiRoutes)
+router.use("/ai", aiRoutes);
+router.use("/autofill", autofillRoutes);
 
 export default router;

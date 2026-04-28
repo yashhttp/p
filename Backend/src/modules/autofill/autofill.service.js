@@ -1,4 +1,4 @@
-import Form from "../form/form.model.js";
+import {Form} from "../form/form.model.js";
 import { runAutofill } from "./autofill.engine.js";
 import ApiError from "../../utils/ApiError.js";
 

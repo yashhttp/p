@@ -9,7 +9,16 @@ export const autofillForm = async (formId, user) => {
     throw new ApiError(404, "Form not found");
   }
 
-  const userData = user.profile;
+//   const userData = user.profile;
+const flattenUserData = (user) => {
+  return {
+    ...user,
+    ...user.profile,
+    ...user.profile?.address,
+    ...user.profile?.govtIds,
+  };
+};
+const userData = flattenUserData(user);
 
   const filledData = await runAutofill(form, userData);
 

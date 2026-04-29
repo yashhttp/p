@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import User from "../modules/user/user.model.js";
 import ApiError from "../utils/ApiError.js";
 
 //  PROTECT ROUTES
@@ -33,4 +34,29 @@ export const Roles = (...roles) => {
 
     next();
   };
+};
+
+export const protect = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      throw new ApiError(401, "Not authorized");
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+
+    // 🔥 IMPORTANT: fetch full user from DB
+    const user = await User.findById(decoded.id).select("-password");
+
+    if (!user) {
+      throw new ApiError(401, "User not found");
+    }
+
+    req.user = user; // ✅ full user now
+
+    next();
+  } catch (error) {
+    next(error);
+  }
 };

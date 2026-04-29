@@ -107,7 +107,7 @@ export const smartMatch = async (fieldLabel, userData) => {
       field: fieldLabel,
       matchedKey: fallback?.matchedKey || null,
       confidence: fallback?.confidence || 0.5,
-      source: "FALLBACK"
+      source: fallback?.confidence > 0.6 ? "AI" : "FALLBACK"
     };
 
   } catch (error) {

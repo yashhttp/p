@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const profileSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  phone: String,
+  firstName: {type: String, default: ""},
+  lastName: {type: String, default: ""},
+  phone: {type: String, default: ""},
   dob: Date,
-  gender: String,
+  gender: {type: String, default: ""},
   address: {
     line1: String,
     line2: String,

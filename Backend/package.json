@@ -13,6 +13,8 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1038.0",
+    "@aws-sdk/s3-request-presigner": "^3.1038.0",
     "@xenova/transformers": "^2.17.2",
     "aws-sdk": "^2.1693.0",
     "axios": "^1.15.2",

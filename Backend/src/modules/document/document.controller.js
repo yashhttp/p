@@ -28,3 +28,9 @@ export const getDocuments = async (req, res) => {
 
   res.json({ success: true, data: docs });
 };
+
+export const deleteDoc = async (req, res) => {
+  await documentService.deleteDocument(req.params.id, req.user.id);
+
+  res.json({ success: true, message: "Deleted" });
+};

@@ -19,3 +19,15 @@ export const uploadDocument = async(userId, file, type)=>{
 export const getUserDocuments = async (userId) => {
   return Document.find({ user: userId, isDeleted: false });
 };
+
+
+export const deleteDocument = async (docId, userId) => {
+  const doc = await Document.findOne({ _id: docId, user: userId });
+
+  if (!doc) throw new Error("Document not found");
+
+  doc.isDeleted = true;
+  await doc.save();
+
+  return true;
+};

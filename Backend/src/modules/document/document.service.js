@@ -3,30 +3,30 @@ import { s3 } from "../../config/s3.js";
 import { generateFileHash } from "../../utils/hash.js";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { classifyDocument } from "../ai/documentClassifier.js";
 
-export const uploadDocument = async(userId, file, type)=>{
-    const hash = await generateFileHash(file.path);
-    // duplicate check
-    const existing = await Document.findOne({user : userId, hash});
+export const uploadDocument = async (userId, file, type) => {
+  const hash = await generateFileHash(file.path);
+  // duplicate check
+  const existing = await Document.findOne({ user: userId, hash });
 
-    if(existing){
-        return existing; //skip new upload and return existing document
-    }
-    const doc = await Document.create({
-        user : userId,
-        fileName : file.filename,
-        originalName : file.originalname,
-        mimeType : file.mimetype,
-        size : file.size,
-        url : `/uploads/${file.filename}`,
-        type,
-        hash,
-
-
-    })
-    return doc;
-
-}
+  if (existing) {
+    return existing; //skip new upload and return existing document
+  }
+  //  auto classify if not provided
+  const detectedType = type || classifyDocument(file.originalname);
+  const doc = await Document.create({
+    user: userId,
+    fileName: file.filename,
+    originalName: file.originalname,
+    mimeType: file.mimetype,
+    size: file.size,
+    url: `/uploads/${file.filename}`,
+    type: detectedType,
+    hash,
+  });
+  return doc;
+};
 
 export const getUserDocuments = async (userId) => {
   return Document.find({ user: userId, isDeleted: false });
@@ -52,8 +52,6 @@ export const deleteDocument = async (docId, userId) => {
 
 //     return s3.getSignedUrlPromise("getObject", params);
 // }
-
-
 
 export const getPresignedUrl = async (key) => {
   const command = new GetObjectCommand({

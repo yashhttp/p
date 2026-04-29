@@ -21,3 +21,10 @@ export const uploadDocument = async (req, res) => {
     data: doc,
   });
 };
+
+
+export const getDocuments = async (req, res) => {
+  const docs = await documentService.getUserDocuments(req.user.id);
+
+  res.json({ success: true, data: docs });
+};

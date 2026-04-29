@@ -32,3 +32,12 @@ export const deleteDocument = async (docId, userId) => {
   return true;
 };
 
+export const getPresignedUrl = async(key)=>{
+    const params = {
+        Bucket: process.env.AWS_S3_BUCKET_NAME,
+        Key: key,
+        Expires: 60, // 1 minute
+    }
+
+    return s3.getSignedUrlPromise("getObject", params);
+}

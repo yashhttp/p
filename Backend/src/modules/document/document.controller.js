@@ -1,6 +1,6 @@
-
 import * as documentService from "./document.service.js";
-
+import asyncHandler from "../../utils/asyncHandler.js";
+import Document from "./document.model.js";
 export const uploadDocument = async (req, res) => {
   const file = req.file;
   const userId = req.user.id;
@@ -22,7 +22,6 @@ export const uploadDocument = async (req, res) => {
   });
 };
 
-
 export const getDocuments = async (req, res) => {
   const docs = await documentService.getUserDocuments(req.user.id);
 
@@ -34,3 +33,17 @@ export const deleteDoc = async (req, res) => {
 
   res.json({ success: true, message: "Deleted" });
 };
+
+export const getPresignedUrl = asyncHandler(async(req,res)=>{
+    const {id} = req.params;
+    const doc = await Document.findById(id);
+
+    if(!doc || doc.user.toString() !== req.user.id){
+        return res.status(403).json({message:"Unauthorized"})
+    }
+    const url = await documentService.getPresignedUrl(doc.fileName);
+    res.json({
+        success:true,
+        url,
+    })
+})

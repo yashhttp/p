@@ -24,8 +24,6 @@ const flattenUserData = (user) => {
     // profile
     firstName: profile.firstName,
     lastName: profile.lastName,
-
-    // ✅ MOST IMPORTANT
     fullName: `${profile.firstName || ""} ${profile.lastName || ""}`.trim(),
 
     phone: profile.phone,

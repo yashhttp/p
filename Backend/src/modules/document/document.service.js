@@ -1,4 +1,5 @@
 import Document from "./document.model.js";
+import { s3 } from "../../config/s3.js";
 
 export const uploadDocument = async(userId, file, type)=>{
     const doc = await Document.create({
@@ -20,7 +21,6 @@ export const getUserDocuments = async (userId) => {
   return Document.find({ user: userId, isDeleted: false });
 };
 
-
 export const deleteDocument = async (docId, userId) => {
   const doc = await Document.findOne({ _id: docId, user: userId });
 
@@ -31,3 +31,4 @@ export const deleteDocument = async (docId, userId) => {
 
   return true;
 };
+

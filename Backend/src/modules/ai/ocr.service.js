@@ -1,7 +1,7 @@
 import Tesseract from 'tesseract.js';
-import pdf from 'pdf-parse';
+import * as pdf from "pdf-parse";
 import fs from 'fs';
-import ApiError from '../../utils/ApiError';
+import ApiError from '../../utils/ApiError.js';
 export const extractTextFromFile = async(filePath, mimetype)=>{
     try{
         if(mimetype === 'application/pdf'){
@@ -20,6 +20,6 @@ export const extractTextFromFile = async(filePath, mimetype)=>{
             confidence: data.confidence / 100,
         };
     }catch(error){
-        throw new ApiError(500, 'Failed to extract text from file');
+        throw new ApiError(500, 'Failed to extract text from file - OCR Failed');
     }
 }

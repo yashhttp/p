@@ -1,6 +1,7 @@
 import { getBatchEmbeddings } from "./ai.provider.js";
 import { findBestMatch } from "../mapping/mapping.rules.js"; 
-
+import axios from "axios";
+import ApiError from "../../utils/ApiError.js";
 //  CONFIG
 const THRESHOLD = 0.6;
 
@@ -124,3 +125,33 @@ export const smartMatch = async (fieldLabel, userData) => {
     };
   }
 };
+
+export const cleanExtractedData = async(rawData)=>{
+  try{
+    const response = await axios.post(
+      "https://api-inference.huggingface.co/models/facebook/bart-large-cnn",
+      {
+        inputs:JSON.stringify(rawData)
+      },
+      {
+        headers:{
+          Authorization: `Bearer ${process.env.HF_API_KEY}`,
+        },
+      }
+
+    );
+    return {
+      cleaned : rawData,
+      aiResponse : response.data
+    };
+
+  }catch(err){
+    return {
+      cleaned : rawData,
+      aiResponse : null,
+      error : err.message
+    };
+
+  }
+
+}

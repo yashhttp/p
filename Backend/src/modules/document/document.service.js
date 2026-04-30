@@ -1,7 +1,7 @@
 import Document from "./document.model.js";
 import { s3 } from "../../config/s3.js";
 import { generateFileHash } from "../../utils/hash.js";
-import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { classifyDocument } from "../ai/documentClassifier.js";
 
@@ -53,11 +53,13 @@ export const deleteDocument = async (docId, userId) => {
 //     return s3.getSignedUrlPromise("getObject", params);
 // }
 
-export const getPresignedUrl = async (key) => {
-  const command = new GetObjectCommand({
+export const getPresignedUrl = async () => {
+  const command = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME,
-    Key: key,
+    Key: `test-${Date.now()}.jpg`,
+    ContentType: "image/jpeg",
   });
 
-  return await getSignedUrl(s3, command, { expiresIn: 60 });
+  const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+  return url;
 };

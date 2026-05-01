@@ -89,3 +89,4 @@ export const extractStructuredData = (text) => {
 
   return data;
 };
+

@@ -1,4 +1,3 @@
-
 export const cleanEmail = (text) => {
   if (!text) return null;
 
@@ -26,6 +25,7 @@ export const cleanFields = (data) => {
 
   return cleaned;
 };
+
 export const formatPhone = (phone) => {
   if (!phone) return null;
 

@@ -1,17 +1,41 @@
-export const builtInRules = {
-  required: (value) => value !== undefined && value !== null && value !== "",
+export const rules = {
+  required: (value) => {
+    if (value === undefined || value === null || value === "") {
+      return "This field is required";
+    }
+    return null;
+  },
 
-  email: (value) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+  min: (value, min) => {
+    if (value < min) return `Minimum value is ${min}`;
+    return null;
+  },
 
-  phone: (value) =>
-    /^[6-9]\d{9}$/.test(value),
+  max: (value, max) => {
+    if (value > max) return `Maximum value is ${max}`;
+    return null;
+  },
 
-  min: (value, min) => String(value).length >= min,
+  regex: (value, pattern) => {
+    const reg = new RegExp(pattern);
+    if (!reg.test(value)) return "Invalid format";
+    return null;
+  },
 
-  max: (value, max) => String(value).length <= max,
+  type: (value, type) => {
+    switch (type) {
+      case "number":
+        if (isNaN(value)) return "Must be a number";
+        break;
 
-  numeric: (value) => !isNaN(Number(value)),
+      case "date":
+        if (isNaN(Date.parse(value))) return "Invalid date";
+        break;
 
-  alpha: (value) => /^[a-zA-Z ]+$/.test(value),
+      case "text":
+        if (typeof value !== "string") return "Must be text";
+        break;
+    }
+    return null;
+  },
 };

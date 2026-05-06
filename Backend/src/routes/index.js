@@ -8,6 +8,7 @@ import mappingRoutes from '../modules/mapping/mapping.routes.js'
 import aiRoutes from '../modules/ai/ai.routes.js'
 import autofillRoutes from '../modules/autofill/autofill.routes.js'
 import documentRoutes from '../modules/document/document.routes.js'
+import validateRoutes from '../modules/validation/validation.routes.js'
 const router = express.Router();
 
 router.get(
@@ -26,5 +27,6 @@ router.use("/mapping", mappingRoutes);
 router.use("/ai", aiRoutes);
 router.use("/autofill", autofillRoutes);
 router.use("/documents", documentRoutes);
+router.use("/validate", validateRoutes)
 
 export default router;

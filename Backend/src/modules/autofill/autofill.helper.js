@@ -35,7 +35,6 @@ const formatDate = (date) => {
   return `${day}-${month}-${year}`;
 };
 
-
 const buildEmpty = (fieldLabel, reason) => {
   return {
     field: fieldLabel,
@@ -64,7 +63,11 @@ export const resolveField = async (fieldLabel, userData) => {
       console.error("AI ERROR:", err.message);
     }
 
-    if (!matchResult || !matchResult.matchedKey || matchResult.confidence < 0.6) {
+    if (
+      !matchResult ||
+      !matchResult.matchedKey ||
+      matchResult.confidence < 0.6
+    ) {
       const fallback = findBestMatch(normalizedField, userData);
 
       if (!fallback.matchedKey) {

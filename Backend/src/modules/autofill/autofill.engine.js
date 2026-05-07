@@ -19,8 +19,7 @@ export const runAutofill = async (form, userData) => {
     //  Select Field Handling
     if (type === "select" && value) {
       const match = options?.find(
-        (opt) =>
-          opt.toLowerCase() === value.toLowerCase()
+        (opt) => opt.toLowerCase() === value.toLowerCase(),
       );
 
       value = match || EMPTY_FIELD_VALUE;

@@ -6,5 +6,6 @@ import { auth, protect, Roles } from "../../middlewares/auth.js";
 const router = express.Router();
 
 router.post("/:formId", protect, controller.autofill);
+router.get("/preview/:formId", protect, controller.getPreview);
 
 export default router;

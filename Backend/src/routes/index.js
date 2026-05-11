@@ -9,6 +9,8 @@ import aiRoutes from '../modules/ai/ai.routes.js'
 import autofillRoutes from '../modules/autofill/autofill.routes.js'
 import documentRoutes from '../modules/document/document.routes.js'
 import validateRoutes from '../modules/validation/validation.routes.js'
+import historyRoutes from "../modules/history/history.routes.js";
+
 const router = express.Router();
 
 router.get(
@@ -28,5 +30,6 @@ router.use("/ai", aiRoutes);
 router.use("/autofill", autofillRoutes);
 router.use("/documents", documentRoutes);
 router.use("/validate", validateRoutes)
+router.use("/history", historyRoutes);
 
 export default router;

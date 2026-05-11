@@ -5,6 +5,7 @@ import { validateFormService } from "../validation/validation.service.js";
 
 import ApiError from "../../utils/ApiError.js";
 
+
 export const autofillForm = async (formId, user) => {
   const form = await Form.findById(formId);
 
@@ -109,3 +110,31 @@ export const generateAutofillPreview = async (formId, userData) => {
 
   return preview;
 };
+
+
+
+import { createHistoryVersion } from "../history/history.service.js";
+
+export const saveAutofill = async ({ userId, formId, data }) => {
+  const form = await Form.findById(formId);
+  if (!form) throw new ApiError(404, "Form not found");
+
+  // old data placeholder (you can fetch last snapshot here)
+  const oldData = {};
+
+  const history = await createHistoryVersion({
+    userId,
+    formId,
+    oldData,
+    newData: data,
+    source: "AI",
+    confidenceScore: 0.92,
+  });
+
+  return {
+    message: "Autofill saved successfully",
+    version: history.version,
+    data: history.dataSnapshot,
+  };
+};
+

@@ -1,5 +1,5 @@
 import asyncHandler from "../../utils/asyncHandler.js";
-import { autofillForm, generateAutofillPreview } from "./autofill.service.js";
+import { autofillForm, generateAutofillPreview , saveAutofill} from "./autofill.service.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 
 export const autofill = asyncHandler(async (req, res) => {
@@ -9,6 +9,7 @@ export const autofill = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new ApiResponse(200, "Autofill success", result));
 });
+
 
 export const getPreview = async (req, res, next) => {
   // for debugging
@@ -36,3 +37,16 @@ export const getPreview = async (req, res, next) => {
     next(err);
   }
 };
+
+
+export const save = asyncHandler(async (req, res) => {
+  const result = await saveAutofill({
+    userId: req.user.id,
+    formId: req.params.formId,
+    data: req.body.filledData,
+  });
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Saved successfully", result));
+});

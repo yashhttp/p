@@ -33,3 +33,21 @@ export const runAutofill = async (form, userData) => {
 
   return result;
 };
+
+import { createHistoryVersion } from "../history/history.service.js";
+
+export const autofillForm = async (userId, formId, aiData) => {
+  
+  const oldData = {}; // fetch previous form data if exists
+
+  const result = await createHistoryVersion({
+    userId,
+    formId,
+    oldData,
+    newData: aiData,
+    source: "AI",
+    confidenceScore: 0.92,
+  });
+
+  return result;
+};
